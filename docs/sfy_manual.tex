@@ -1,7 +1,18 @@
 \documentclass{article}
 
-\title{Sfy Manual (v.)}
+\newcounter{majorversion}
+\newcounter{minorversion}
+
+\setcounter{majorversion}{0}
+\setcounter{minorversion}{2}
+
+\newcommand{\com}[1]{\texttt{#1}}
+\newcommand{\var}[1]{\texttt{#1}}
+\newcommand{\val}[1]{\texttt{\textsl{#1}}}
+
+\title{Sfy Manual (v. \themajorversion.\theminorversion)}
 \author{Paul M.\ Heider}
+\date{February 22, 2009}
 
 \begin{document}
 \maketitle
@@ -9,10 +20,9 @@
 \section{General Use}
 
   \begin{enumerate}
-    \item Load \texttt{alisp}
-    \item (load ``/projects/pmheider/snalps/load\_LKB\_with\_ERG'')
-    \item (load ``/projects/pmheider/snalps/load\_LKB\_utilities'')
-
+    \item Load \com{alisp}
+    \item \com{(load \val{``/projects/pmheider/snalps/load\_LKB\_with\_ERG''})}
+    \item \com{(load \val{``/projects/pmheider/snalps/load\_LKB\_utilities''})}
   \end{enumerate}
 
 \section{Global Variables}
@@ -20,62 +30,79 @@
 \subsection{Localization Variables}
 
   \begin{description}
-    \item[*lkb-directory*] (``/projects/pmheider/delphin/lkb/'')
-    \item[*grammar-directory*] (``/projects/pmheider/delphin/erg\_567/'')
-    \item[*sfy-directory*] (``/projects/pmheider/snalps/'')
+    \item[\var{*lkb-directory*}] (\val{``/projects/pmheider/delphin/lkb/''})
+      \begin{itemize}
+        \item The general loadup script is found relative to this directory:  \texttt{src/general/loadup}
+      \end{itemize}
+    \item[\var{*grammar-directory*}] (\val{``/projects/pmheider/delphin/erg\_567/''})
+      \begin{itemize}
+        \item Your preferred grammar also has a loadup script:  \texttt{lkb/script}
+      \end{itemize}
+    \item[\var{*sfy-directory*}] (\val{``/projects/pmheider/snalps/''})
+    \item[\var{*load-sneps-command*}] (\val{``/projects/snwiz/bin/sneps''})
+    \item[\var{*bindings*}]
+    \item[\var{*handel-rlist*}]
+    \item[\var{*handel-index*}]
   \end{description}
 
 \subsection{Function Variables}
 
   \begin{description}
-    \item[lkb::*show-parse-p*] (nil)
-    \item[*sfy-parse-mode*] (``nested-lists'')
+    \item[\var{lkb::*show-parse-p*}] (\val{nil})
+    \item[\var{*sfy-parse-mode*}] (\val{``nested-lists''})
       \begin{description}
-        \item[nested-lists] currently, the only available parse mode;
+        \item[\val{nested-lists}] currently, the only available parse mode;
       \end{description}
-    \item[*sfy-quiet-parse*] (t) \\
-      When true, parse-to-nested-lists returns *parse-directory* via parse(sentence).  When nil, nothing is returned.
+    \item[\var{*sfy-quiet-parse*}] (\val{t})
+      \begin{itemize}
+        \item When true, \com{parse-to-nested-lists} returns \var{*parse-directory*} via \com{parse(\var{sentence})}.
+        \item When nil, nothing is returned.
+      \end{itemize}
   \end{description}
 
 \subsection{Storage Variables}
 
   \begin{description}
-    \item[*parse-directory*] At the top most level, this variable is a list of parse information. Each possible parse can be dissected into a list of MRS derived semantic forms and a list of ambiguity resolutions. Each semantic form is has three arguments: its handle, its function, and its argument list. The ambiguity resolutions are pairs of handles that could be equivalent.
-    \item[*current-parse*] The first element of *parse-directory* (read:  the last element cons to this list) is retained in this variable.  It only contains the semantic form without the list of ambiguity resolutions.
-    \item[lkb::*parse-record*]
+    \item[\var{*parse-directory*}] At the top most level, this variable is a list of parse information. Each possible parse can be dissected into a list of MRS derived semantic forms and a list of ambiguity resolutions. Each semantic form is has three arguments: its handle, its function, and its argument list. The ambiguity resolutions are pairs of handles that could be equivalent.
+    \item[\var{*current-parse*}] The first element of *parse-directory* (read:  the last element cons to this list) is retained in this variable.  It only contains the semantic form without the list of ambiguity resolutions.
+    \item[\var{lkb::*parse-record*}]
   \end{description}
 
 \section{Global Functions}
 
   \begin{description}
-    \item[clear-old-parse-variables ()]
-    \item[parse (\textsl{sentence})]
-    \item[show-parse-tty (\textsl{\&optional edges title})] ??
-    \item[create-predicate-lists (\textsl{m})]
+    \item[\com{clear-old-parse-variables ()}] \rule{0pt}{0pt}
+      \begin{itemize}
+        \item resets the following variables:  \var{*current-parse*}, \var{*parse-directory*}
+      \end{itemize}
+    \item[\com{parse (\val{sentence})}]
+    \item[\com{show-parse-tty (\val{\&optional edges title})}] ??
+    \item[\com{create-predicate-lists (\val{m})}]
   \end{description}
 
 \section{Local Functions}
 
   \begin{description}
-    \item[show-parse-tty (\textsl{\&optional edges title})]
-    \item[parse-to-nested-lists ()]
-    \item[create-predicate-lists (\textsl{m})]
-    \item[create-qeqs ()]
-    \item[scope-mrs (\textsl{psoa})]
-    \item[index-handels (\textsl{psoa})]
+    \item[\com{show-parse-tty (\val{\&optional edges title})}]
+    \item[\com{parse-to-nested-lists ()}] Grok through LKB's representation for the parsed sentence to generate the \var{*parse-directory*} (and, incidentally, \var{*current-parse*})
+    \item[\com{create-predicate-lists (\val{m})}]
+    \item[\com{sntell (\val{x})}] This function is a simple macro for \com{(snepslog::tell x)}
+    \item[\com{create-qeqs ()}]
+    \item[\com{scope-mrs (\val{psoa})}]
+    \item[\com{index-handels (\val{psoa})}]
   \end{description}
 
 \section{Functions to Use}
 
   \begin{description}
-    \item[reload-lex-files]
-    \item[show-lex-tty]
-    \item[show-type-tty]
-    \item[show-words-tty]
-    \item[apply-lex-tty]
-    \item[index-for-generator]
-    \item[do-generate-tty]
-    \item[show-gen-result]
+    \item[\com{reload-lex-files}]
+    \item[\com{show-lex-tty}]
+    \item[\com{show-type-tty}]
+    \item[\com{show-words-tty}]
+    \item[\com{apply-lex-tty}]
+    \item[\com{index-for-generator}]
+    \item[\com{do-generate-tty}]
+    \item[\com{show-gen-result}]
   \end{description}
 
 \end{document}
