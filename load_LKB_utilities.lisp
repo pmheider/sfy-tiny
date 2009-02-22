@@ -10,6 +10,7 @@
 
 (defun clear-old-parse-variables () 
   (setf *current-parse* '())
+  (setf *handel-directory* '())
   (setf *parse-directory* '())
 
   )
@@ -153,11 +154,19 @@
 	       (setf generic-argument-list (format nil "~A ~A"
 						   generic-argument-list
 						   (gensym "ARG")))
+	       
+	       (if (not (assoc (intern (format nil "~A" argument)) *handel-directory*))
+		   (setf *handel-directory* (acons (intern (format nil "~A" argument))
+						   (gensym (format nil "~A" argument))
+						   *handel-directory*)))
+	       (format t "~A~%" *handel-directory*)
+	       
 	       (setf predicate-argument-list
 		     (format nil "~A,~A"
 			     predicate-argument-list
-			     (gensym 
-			      (format nil "~A" argument)))))
+			     (cdr (assoc (intern (format nil "~A" argument)) *handel-directory*))))
+
+	       (format t "~A~%" predicate-argument-list))
 
 	      (if (not prior-relations)
 		  (let ((frame-definition
