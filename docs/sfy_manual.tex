@@ -1,0 +1,82 @@
+\documentclass{article}
+
+\title{Sfy Manual (v.)}
+\author{Paul M.\ Heider}
+
+\begin{document}
+\maketitle
+
+\section{General Use}
+
+  \begin{enumerate}
+    \item Load \texttt{alisp}
+    \item (load ``/projects/pmheider/snalps/load\_LKB\_with\_ERG'')
+    \item (load ``/projects/pmheider/snalps/load\_LKB\_utilities'')
+
+  \end{enumerate}
+
+\section{Global Variables}
+
+\subsection{Localization Variables}
+
+  \begin{description}
+    \item[*lkb-directory*] (``/projects/pmheider/delphin/lkb/'')
+    \item[*grammar-directory*] (``/projects/pmheider/delphin/erg\_567/'')
+    \item[*sfy-directory*] (``/projects/pmheider/snalps/'')
+  \end{description}
+
+\subsection{Function Variables}
+
+  \begin{description}
+    \item[lkb::*show-parse-p*] (nil)
+    \item[*sfy-parse-mode*] (``nested-lists'')
+      \begin{description}
+        \item[nested-lists] currently, the only available parse mode;
+      \end{description}
+    \item[*sfy-quiet-parse*] (t) \\
+      When true, parse-to-nested-lists returns *parse-directory* via parse(sentence).  When nil, nothing is returned.
+  \end{description}
+
+\subsection{Storage Variables}
+
+  \begin{description}
+    \item[*parse-directory*] At the top most level, this variable is a list of parse information. Each possible parse can be dissected into a list of MRS derived semantic forms and a list of ambiguity resolutions. Each semantic form is has three arguments: its handle, its function, and its argument list. The ambiguity resolutions are pairs of handles that could be equivalent.
+    \item[*current-parse*] The first element of *parse-directory* (read:  the last element cons to this list) is retained in this variable.  It only contains the semantic form without the list of ambiguity resolutions.
+    \item[lkb::*parse-record*]
+  \end{description}
+
+\section{Global Functions}
+
+  \begin{description}
+    \item[clear-old-parse-variables ()]
+    \item[parse (\textsl{sentence})]
+    \item[show-parse-tty (\textsl{\&optional edges title})] ??
+    \item[create-predicate-lists (\textsl{m})]
+  \end{description}
+
+\section{Local Functions}
+
+  \begin{description}
+    \item[show-parse-tty (\textsl{\&optional edges title})]
+    \item[parse-to-nested-lists ()]
+    \item[create-predicate-lists (\textsl{m})]
+    \item[create-qeqs ()]
+    \item[scope-mrs (\textsl{psoa})]
+    \item[index-handels (\textsl{psoa})]
+  \end{description}
+
+\section{Functions to Use}
+
+  \begin{description}
+    \item[reload-lex-files]
+    \item[show-lex-tty]
+    \item[show-type-tty]
+    \item[show-words-tty]
+    \item[apply-lex-tty]
+    \item[index-for-generator]
+    \item[do-generate-tty]
+    \item[show-gen-result]
+  \end{description}
+
+\end{document}
+
