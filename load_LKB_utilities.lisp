@@ -9,6 +9,7 @@
   (snepslog::tell x))
 
 (defun clear-old-parse-variables () 
+  (setf *current-parse* '())
   (setf *parse-directory* '())
 
   )
